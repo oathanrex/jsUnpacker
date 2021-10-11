@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en-US' }}">
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+  <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
+  {% seo %}
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <h1 id="title">{{ site.name }}<sup>{{ site.version }}</sup></h1>
+      <h2>{{ site.description }}</h2>
+
+      <section id="downloads">
+        {% if site.show_downloads %}
+        <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
+        <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a> {% endif %}
+        <a href="{{ site.github.repository_url }}" target="_blank" class="btn btn-github">
+          <span class="icon"></span>
+          View on GitHub
+        </a>
+      </section>
+    </div>
+  </header>
+
+  <div class="container">
+    <section id="main_content">
+      <div class="tabs">
+        <div class="tab active" data-target="String">String</div>
+        <div class="tab" data-target="Local">Local File</div>
+        <div class="tab" data-target="Remote">Remote File</div>
+      </div>
+      <div class="cf"></div>
+      <div class="tabs-contents">
+        <div class="tab-content show" id="contentString">
+          <textarea id="input" class="content" rows="7" placeholder="Paste code here..."></textarea>
+        </div>
+        <div class="tab-content" id="contentLocal">
+          <div class="box">
+            <input type="file" name="file" id="file" class="inputfile" accept="text/javascript,text/plain">
+            <label for="file" class="read-only">
+              <span id="fileName"></span>
+              <strong>Choose a file…</strong>
+            </label>
+          </div>
+          <pre id="renderLocal" class="render read-only"></pre>
+        </div>
+        <div class="tab-content" id="contentRemote">
+          <form class="form-wrapper cf" id="formRemove">
+            <input type="url" placeholder="Enter a URL" id="urlRemove" required>
+            <button type="submit" class="btn" id="submitRemove">Submit</button>
+          </form>
+          <small>Cross-origin requests require Access-Control-Allow-Origin header</small>
+          <pre id="renderRemove" class="render read-only"></pre>
+        </div>
+      </div>
+
+      <div class="config tab-content show">
+        <form name="de4js">
+          <div class="methods-wrap">
+            <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
+            <label for="none">None</label>
+            {% for opt in site.data.methods %}
+            <input id="{{ opt.key }}" class="magic-radio de4js-method" type="radio" value="{{ opt.key }}" name="encode">
+            <label for="{{ opt.key }}">{{ opt.name }}</label>
+            {% endfor %}
+            <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
+            <label for="nicify">
+              <a href="https://github.com/oathanrex/jsUnpacker/blob/master/README.md#helper" target="_blank"
+                class="help">Unreadable</a>
+            </label>
+          </div>
+          <div class="options-wrap">
+            {% for opt in site.data.options %}
+            <input id="{{ opt.key }}" class="magic-checkbox de4js-option" type="checkbox" value="yes"
+              name="{{ opt.key }}" {% if opt.checked %} checked {% endif %}>
+            <label for="{{ opt.key }}">{{ opt.name }}</label>
+            {% endfor %}
+          </div>
+        </form>
+      </div>
+
+      <div class="center">
+        <button id="clear" class="btn" type="reset">
+          Clear
+        </button>
+        <button id="auto" class="btn" type="button">
+          Auto Decode
+        </button>
+      </div>
+
+      <div class="view-wrap">
+        <div class="view-control">
+          <button id="copyjs" class="btn" type="button">
+            <img class="btn-icon" src="{{ 'assets/images/buttons/copy-document.png' | relative_url }}"
+              alt="Copy to clipboard">
+          </button>
+          <a id="download" class="btn" type="button" href="#" download="result.js">
+            <img class="btn-icon" src="{{ 'assets/images/buttons/download.png' | relative_url }}" alt="Download file">
+          </a>
+          <a id="preview" class="btn" type="button" href="#">
+            <img class="btn-icon" src="{{ 'assets/images/buttons/external-link-symbol.png' | relative_url }}"
+              alt="Open in new tab">
+          </a>
+        </div>
+        <textarea id="readable"></textarea>
+        <pre id="view" class="hljs"></pre>
+      </div>
+    </section>
+
+    <footer id="footer">
+      <section class="sponsors">
+        <h3>About</h3>
+        <p>JavaScript Deobfuscator and Unpacker by Oathan Rex.</p>
+      </section>
+      <section class="credits">
+        <h3>Credits</h3>
+        <p>Project maintained by <a href="https://oathanrex.blogspot.com" title="oathanex">Oathan Rex</a>
+          <br>Hosted on GitHub Pages
+        </p>
+       
+      </section>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="{{ 'third_party/clipboard-js/clipboard.min.js' | relative_url }}"></script>
+  <script src="{{ 'main.js' | relative_url }}" type="text/javascript"></script>
+
+  {% if site.environment == "production" or jekyll.environment == "production" %}
+  <script type="module">
+    import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-window.prod.mjs';
+
+    if ('serviceWorker' in navigator) {
+      const wb = new Workbox("{{ 'sw.js' | relative_url }}");
+
+      wb.addEventListener('installed', (event) => {
+        if (!event.isUpdate) return;
+
+        caches.keys().then((cacheNames) =>
+          Promise.all(
+            cacheNames.map((cacheName) => {
+              console.log('Clear cache', cacheName);
+              return caches.delete(cacheName);
+            })
+          )
+        );
+
+        if (confirm('A new version is downloaded. Launch it?')) {
+          location.reload(true);
+        }
+      });
+
+      wb.register();
+    }
+  </script>
+  {% endif %}
+</body>
+
+</html>

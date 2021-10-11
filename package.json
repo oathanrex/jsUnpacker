@@ -1,0 +1,41 @@
+{
+  "name": "jsUnpacker",
+  "version": "1.12.0",
+  "description": "JavaScript Deobfuscator and Unpacker",
+  "main": "main.js",
+  "scripts": {
+    "build": "bundle exec jekyll build && workbox generateSW workbox-config.js",
+    "d-build": "docker exec -it de4js_app bundle exec jekyll build && workbox generateSW workbox-config.js",
+    "start": "bundle exec jekyll serve --watch --config _config.yml",
+    "watch": "bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oathanrex/jsUnpacker.git"
+  },
+  "keywords": [
+    "deobfuscator",
+    "deobfuscate",
+    "deobfuscation",
+    "unpacker",
+    "decode",
+    "decrypt",
+    "javascript",
+    "online-tools"
+  ],
+  "author": "Oathan Rex",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oathanrex/jsUnpacker/issues"
+  },
+  "homepage": "https://oathanrex.github.io/jsUnpacker/",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/jsUnpacker"
+  },
+  "devDependencies": {
+    "eslint-plugin-frontmatter": "0.0.8",
+    "workbox-cli": "^6.0.2"
+  }
+}

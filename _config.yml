@@ -1,1 +1,32 @@
-theme: jekyll-theme-slate
+name: jsUnpacker
+title: jsUnpacker
+description: JavaScript Deobfuscator and Unpacker
+version: 1.12.0
+author: Oathan Rex
+author_email: oathanrex@gmail.com
+url: https://oathanrex.github.io
+baseurl: /jsUnpacker
+repository: oathanrex/jsUnpacker
+license: MIT
+
+theme: jekyll-theme-hacker
+show_downloads: false
+google_analytics: UA-207885168-2
+sass:
+  style: compressed
+
+exclude:
+  [
+    "Gemfile",
+    "Gemfile.lock",
+    "node_modules",
+    "package.json",
+    "package-lock.json",
+    "Dockerfile",
+    "docker-compose.yml",
+    "docker-entrypoint.sh",
+    "workbox-config.js"
+  ]
+incremental: false
+
+environment: production
