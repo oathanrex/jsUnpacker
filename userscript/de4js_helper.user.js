@@ -1,20 +1,20 @@
 ---
 ---
 // ==UserScript==
-// @name         de4js helper
-// @namespace    https://baivong.github.io/de4js/
-// @description  Enable Unreadable option in de4js
+// @name         jsUnpacker helper
+// @namespace    https://oathanrex.github.io/jsUnpacker/
+// @description  Enable Unreadable option in jsUnpacker
 // @version      {{ site.version }}
 // @icon         https://i.imgur.com/CJ5MfxV.png
 // @author       {{ site.author }}
 // @license      {{ site.license }}
-// @match        {{ site.url }}/de4js/
-// @include      http://127.0.0.1:4000/de4js/
-// @include      http://localhost:4000/de4js/
+// @match        {{ site.url }}/jsUnpacker/
+// @include      http://127.0.0.1:4000/jsUnpacker/
+// @include      http://localhost:4000/jsUnpacker/
 // @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js?v=a834d46
 // @noframes
 // @connect      jsnice.org
-// @supportURL   https://github.com/lelinhtinh/de4js/issues
+// @supportURL   https://github.com/oathanrex/jsUnpacker/issues
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM.xmlHttpRequest
