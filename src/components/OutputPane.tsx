@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
-import { Copy, Check, Download, AlignLeft, WrapText, CheckCircle2, AlertTriangle, Eye, Sparkles } from 'lucide-react';
+import {
+  Copy,
+  Check,
+  Download,
+  AlignLeft,
+  WrapText,
+  CheckCircle2,
+  AlertTriangle,
+  Eye,
+  Sparkles,
+  ArrowLeft,
+  Layers,
+} from 'lucide-react';
 import type { UnpackResult } from '../engine/types';
 
 interface OutputPaneProps {
   result: UnpackResult | null;
   onBeautify: () => void;
   originalCode: string;
+  onSwitchToInput?: () => void;
+  onCopyOutputToInput?: () => void;
 }
 
 export const OutputPane: React.FC<OutputPaneProps> = ({
   result,
   onBeautify,
   originalCode,
+  onSwitchToInput,
+  onCopyOutputToInput,
 }) => {
   const [copied, setCopied] = useState(false);
   const [wrapLines, setWrapLines] = useState(true);
@@ -179,8 +195,8 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
         )}
       </div>
 
-      {/* Pane Footer Stats */}
-      <div className="flex items-center justify-between border-t border-[var(--brand-border-subtle)] bg-[var(--brand-bg)]/60 px-2.5 sm:px-3 py-1.5 font-mono text-[11px] text-[var(--brand-muted)]">
+      {/* Pane Footer Stats & Mobile Actions */}
+      <div className="flex flex-wrap items-center justify-between border-t border-[var(--brand-border-subtle)] bg-[var(--brand-bg)]/60 px-2.5 sm:px-3 py-1.5 font-mono text-[11px] text-[var(--brand-muted)] gap-2">
         <div className="flex items-center gap-1.5 sm:gap-2">
           {result?.detectedType && (
             <span className="inline-flex items-center gap-1 rounded bg-[var(--brand-accent-soft)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--brand-accent-ink)] uppercase">
@@ -191,10 +207,33 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
           <span>{lines.toLocaleString()}L · {chars.toLocaleString()}C</span>
         </div>
 
-        <div>
+        <div className="flex items-center gap-2">
+          {/* Quick mobile jump to input */}
+          {onSwitchToInput && (
+            <button
+              onClick={onSwitchToInput}
+              className="lg:hidden flex items-center gap-1 rounded border border-[var(--brand-border-subtle)] bg-[var(--brand-surface)] px-2 py-0.5 font-sans text-xs font-medium text-[var(--brand-fg)] hover:border-[var(--brand-accent)] cursor-pointer"
+            >
+              <ArrowLeft className="h-3 w-3" />
+              <span>Input</span>
+            </button>
+          )}
+
+          {/* Peel next layer button */}
+          {result?.output && onCopyOutputToInput && (
+            <button
+              onClick={onCopyOutputToInput}
+              title="Copy clean output back into input to peel nested obfuscation layers"
+              className="flex items-center gap-1 rounded border border-[var(--brand-accent)]/40 bg-[var(--brand-accent-soft)] px-2.5 py-0.5 font-sans text-xs font-semibold text-[var(--brand-accent-ink)] hover:bg-[var(--brand-accent)] hover:text-[var(--brand-accent-fg)] transition-all cursor-pointer shadow-xs"
+            >
+              <Layers className="h-3 w-3" />
+              <span>Peel Next Layer</span>
+            </button>
+          )}
+
           {result && (
-            <span>
-              Unpacked in <strong className="text-[var(--brand-fg)]">{result.durationMs}ms</strong>
+            <span className="hidden sm:inline">
+              <strong className="text-[var(--brand-fg)]">{result.durationMs}ms</strong>
             </span>
           )}
         </div>

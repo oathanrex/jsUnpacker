@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   BookOpen,
   ShieldCheck,
-  Terminal,
-  FileCode,
-  Eye,
   AlertTriangle,
-  CheckCircle2,
   Zap,
   Lock,
   Layers,
   Search,
-  Sparkles,
   ArrowRight,
-  ExternalLink,
+  ArrowLeft,
   HelpCircle,
 } from 'lucide-react';
 
@@ -21,11 +16,44 @@ interface GuideSectionProps {
   onLoadSample?: (code: string, type: string) => void;
 }
 
-export const GuideSection: React.FC<GuideSectionProps> = ({ onLoadSample }) => {
-  const [activeTab, setActiveTab] = useState<'guide' | 'signatures' | 'walkthrough' | 'safety' | 'nested' | 'faq'>('guide');
+type TabId = 'guide' | 'signatures' | 'walkthrough' | 'safety' | 'nested' | 'faq';
+
+interface GuideTabItem {
+  id: TabId;
+  label: string;
+  shortLabel: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const TABS: GuideTabItem[] = [
+  { id: 'guide', label: 'Field Guide', shortLabel: 'Field Guide', icon: BookOpen },
+  { id: 'signatures', label: 'Recognizing Scrambled Code', shortLabel: 'Signatures', icon: Search },
+  { id: 'walkthrough', label: '4-Step Walkthrough', shortLabel: 'Walkthrough', icon: Zap },
+  { id: 'safety', label: 'Security Checklist', shortLabel: 'Security', icon: AlertTriangle },
+  { id: 'nested', label: 'Nested Obfuscation', shortLabel: 'Nested Code', icon: Layers },
+  { id: 'faq', label: 'FAQ', shortLabel: 'FAQ', icon: HelpCircle },
+];
+
+export const GuideSection: React.FC<GuideSectionProps> = () => {
+  const [activeTab, setActiveTab] = useState<TabId>('guide');
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const currentIndex = TABS.findIndex((t) => t.id === activeTab);
+  const prevTab = currentIndex > 0 ? TABS[currentIndex - 1] : null;
+  const nextTab = currentIndex < TABS.length - 1 ? TABS[currentIndex + 1] : null;
+
+  const handleTabChange = (newTab: TabId) => {
+    setActiveTab(newTab);
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
-    <section className="mt-8 rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-surface)] p-4 sm:p-6 lg:p-8 shadow-xs">
+    <section
+      ref={sectionRef}
+      className="mt-8 rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-surface)] p-4 sm:p-6 lg:p-8 shadow-xs scroll-mt-20"
+    >
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--brand-border-subtle)] pb-6">
         <div>
@@ -52,22 +80,45 @@ export const GuideSection: React.FC<GuideSectionProps> = ({ onLoadSample }) => {
         </div>
       </div>
 
-      {/* Navigation Pills Bar */}
-      <div className="mt-6 flex items-center gap-1.5 overflow-x-auto no-scrollbar border-b border-[var(--brand-border-subtle)] pb-3">
-        {[
-          { id: 'guide', label: 'Field Guide', icon: BookOpen },
-          { id: 'signatures', label: 'Recognizing Scrambled Code', icon: Search },
-          { id: 'walkthrough', label: '4-Step Walkthrough', icon: Zap },
-          { id: 'safety', label: 'Security Checklist', icon: AlertTriangle },
-          { id: 'nested', label: 'Nested Obfuscation', icon: Layers },
-          { id: 'faq', label: 'FAQ', icon: HelpCircle },
-        ].map((tab) => {
+      {/* Navigation on Mobile: 2-Column High-Visibility Grid (ALL 6 TABS VISIBLE AT A GLANCE) */}
+      <div className="mt-6 md:hidden">
+        <div className="mb-2 flex items-center justify-between text-[11px] font-mono text-[var(--brand-muted)]">
+          <span>SELECT TOPIC:</span>
+          <span className="text-[var(--brand-accent)] font-semibold">
+            {currentIndex + 1} of {TABS.length}
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {TABS.map((tab, idx) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTabChange(tab.id)}
+                className={`flex items-center gap-2 rounded-xl p-2.5 text-xs font-semibold transition-all cursor-pointer min-h-[44px] text-left ${
+                  isActive
+                    ? 'bg-[var(--brand-accent)] text-[var(--brand-accent-fg)] shadow-sm'
+                    : 'border border-[var(--brand-border-subtle)] bg-[var(--brand-bg)] text-[var(--brand-fg)] hover:border-[var(--brand-border)] active:scale-98'
+                }`}
+              >
+                <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-inherit' : 'text-[var(--brand-muted)]'}`} />
+                <span className="truncate">{tab.shortLabel}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Navigation on Desktop: Sleek Horizontal Pills Bar */}
+      <div className="mt-6 hidden md:flex items-center gap-1.5 overflow-x-auto no-scrollbar border-b border-[var(--brand-border-subtle)] pb-3">
+        {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => handleTabChange(tab.id)}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all shrink-0 cursor-pointer ${
                 isActive
                   ? 'bg-[var(--brand-accent)] text-[var(--brand-accent-fg)] shadow-xs'
@@ -420,6 +471,62 @@ export const GuideSection: React.FC<GuideSectionProps> = ({ onLoadSample }) => {
           ))}
         </div>
       )}
+
+      {/* Bottom Stepper: Next / Previous Navigation Bar */}
+      <div className="mt-8 pt-4 border-t border-[var(--brand-border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="w-full sm:w-auto flex justify-start">
+          {prevTab ? (
+            <button
+              onClick={() => handleTabChange(prevTab.id)}
+              className="w-full sm:w-auto flex items-center gap-2 rounded-xl border border-[var(--brand-border)] bg-[var(--brand-bg)] px-3.5 py-2.5 text-xs font-medium text-[var(--brand-fg)] hover:border-[var(--brand-accent)] transition-all cursor-pointer min-h-[44px]"
+            >
+              <ArrowLeft className="h-4 w-4 shrink-0 text-[var(--brand-muted)]" />
+              <div className="text-left">
+                <div className="text-[10px] text-[var(--brand-muted)] font-mono uppercase">Previous Section</div>
+                <div className="font-semibold">{prevTab.shortLabel}</div>
+              </div>
+            </button>
+          ) : (
+            <div className="hidden sm:block" />
+          )}
+        </div>
+
+        {/* Stepper Dots & Index Indicator */}
+        <div className="flex items-center gap-1.5 font-mono text-xs text-[var(--brand-muted)]">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => handleTabChange(t.id)}
+              title={t.label}
+              className={`h-2 rounded-full transition-all cursor-pointer ${
+                activeTab === t.id
+                  ? 'w-6 bg-[var(--brand-accent)]'
+                  : 'w-2 bg-[var(--brand-border)] hover:bg-[var(--brand-muted)]'
+              }`}
+            />
+          ))}
+          <span className="ml-2">
+            {currentIndex + 1} / {TABS.length}
+          </span>
+        </div>
+
+        <div className="w-full sm:w-auto flex justify-end">
+          {nextTab ? (
+            <button
+              onClick={() => handleTabChange(nextTab.id)}
+              className="w-full sm:w-auto flex items-center justify-between sm:justify-start gap-2 rounded-xl bg-[var(--brand-accent)] px-4 py-2.5 text-xs font-semibold text-[var(--brand-accent-fg)] hover:bg-[var(--brand-accent-hover)] transition-all cursor-pointer shadow-xs min-h-[44px]"
+            >
+              <div className="text-left sm:text-right">
+                <div className="text-[10px] opacity-80 font-mono uppercase">Next Section</div>
+                <div className="font-bold">{nextTab.shortLabel}</div>
+              </div>
+              <ArrowRight className="h-4 w-4 shrink-0" />
+            </button>
+          ) : (
+            <div className="hidden sm:block" />
+          )}
+        </div>
+      </div>
     </section>
   );
 };

@@ -101,6 +101,19 @@ export const App: React.FC = () => {
     setResult(null);
   };
 
+  // Peel next layer handler
+  const handleCopyOutputToInput = () => {
+    if (!result?.output) return;
+    setInputCode(result.output);
+    setTimeout(() => {
+      const res = executeUnpack(result.output, 'auto', options);
+      setResult(res);
+      if (window.innerWidth < 1024) {
+        setMobileView('output');
+      }
+    }, 20);
+  };
+
   // Re-format clean output
   const handleBeautifyOutput = () => {
     if (!result?.output) return;
@@ -203,6 +216,8 @@ export const App: React.FC = () => {
               value={inputCode}
               onChange={setInputCode}
               onClear={handleClear}
+              onSwitchToOutput={() => setMobileView('output')}
+              hasOutput={!!result?.output}
             />
           </div>
 
@@ -212,6 +227,8 @@ export const App: React.FC = () => {
               result={result}
               onBeautify={handleBeautifyOutput}
               originalCode={inputCode}
+              onSwitchToInput={() => setMobileView('input')}
+              onCopyOutputToInput={handleCopyOutputToInput}
             />
           </div>
         </div>

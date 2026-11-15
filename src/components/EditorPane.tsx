@@ -1,13 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { FileCode, Upload, Globe, Trash2, ClipboardPaste } from 'lucide-react';
+import { FileCode, Upload, Globe, Trash2, ClipboardPaste, ArrowRight } from 'lucide-react';
 
 interface EditorPaneProps {
   value: string;
   onChange: (value: string) => void;
   onClear: () => void;
+  onSwitchToOutput?: () => void;
+  hasOutput?: boolean;
 }
 
-export const EditorPane: React.FC<EditorPaneProps> = ({ value, onChange, onClear }) => {
+export const EditorPane: React.FC<EditorPaneProps> = ({
+  value,
+  onChange,
+  onClear,
+  onSwitchToOutput,
+  hasOutput,
+}) => {
   const [activeTab, setActiveTab] = useState<'text' | 'file' | 'url'>('text');
   const [urlInput, setUrlInput] = useState('');
   const [isFetchingUrl, setIsFetchingUrl] = useState(false);
@@ -133,6 +141,17 @@ export const EditorPane: React.FC<EditorPaneProps> = ({ value, onChange, onClear
             <Trash2 className="h-3.5 w-3.5" />
             <span className="hidden md:inline text-[10px] font-sans">Clear</span>
           </button>
+
+          {/* Quick jump to output on mobile */}
+          {hasOutput && onSwitchToOutput && (
+            <button
+              onClick={onSwitchToOutput}
+              className="lg:hidden flex items-center gap-1 rounded bg-[var(--brand-accent-soft)] px-2 py-0.5 font-sans text-xs font-semibold text-[var(--brand-accent-ink)] cursor-pointer"
+            >
+              <span>Output</span>
+              <ArrowRight className="h-3 w-3" />
+            </button>
+          )}
         </div>
       </div>
 
