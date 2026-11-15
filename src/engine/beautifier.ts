@@ -16,7 +16,6 @@ export function formatJavaScript(
       preserve_newlines: true,
       keep_array_indentation: false,
       break_chained_methods: false,
-      indent_scripts: 'normal',
       brace_style: 'collapse',
       space_before_conditional: options.spaceBeforeConditional !== false,
       unescape_strings: options.unescapeStrings !== false,

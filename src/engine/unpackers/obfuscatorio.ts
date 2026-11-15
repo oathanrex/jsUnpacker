@@ -7,11 +7,11 @@ export function ObfuscatorIO(
 ): string {
   const detectPattern =
     /((?![^_a-zA-Z$])[\w$]*)\(-?('|")(0x[a-f\d]+|\\x30\\x78[\\xa-f\d]+)\2(\s*,\s*('|").+?\5)?\)/gi;
-  let detectMatch = source.match(detectPattern);
+  const initialMatch = source.match(detectPattern);
 
-  if (!detectMatch) throw new Error('Not matched ObfuscatorIO pattern');
+  if (!initialMatch) throw new Error('Not matched ObfuscatorIO pattern');
 
-  detectMatch = detectMatch.map((i) => i.replace(/\(.+?\)$/, ''));
+  let detectMatch: string[] = initialMatch.map((i) => i.replace(/\(.+?\)$/, ''));
   detectMatch = detectMatch.filter(
     (i, pos) => detectMatch.indexOf(i) === pos && i !== ''
   );
