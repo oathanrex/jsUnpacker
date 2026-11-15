@@ -4,10 +4,12 @@ import { ControlsBar } from './components/ControlsBar';
 import { EditorPane } from './components/EditorPane';
 import { OutputPane } from './components/OutputPane';
 import { StatsBar } from './components/StatsBar';
+import { GuideSection } from './components/GuideSection';
 import { executeUnpack } from './engine/unpackerService';
 import { CODE_SAMPLES } from './engine/samples';
 import { formatJavaScript } from './engine/beautifier';
 import type { PackerType, UnpackerOptions, UnpackResult } from './engine/types';
+import { FileCode, Sparkles, Columns2 } from 'lucide-react';
 
 const DEFAULT_OPTIONS: UnpackerOptions = {
   formatCode: true,
@@ -42,6 +44,7 @@ export const App: React.FC = () => {
   const [options, setOptions] = useState<UnpackerOptions>(DEFAULT_OPTIONS);
   const [result, setResult] = useState<UnpackResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [mobileView, setMobileView] = useState<'input' | 'output' | 'split'>('input');
 
   // Execution handler
   const handleExecute = useCallback(() => {
@@ -55,8 +58,12 @@ export const App: React.FC = () => {
       const res = executeUnpack(inputCode, selectedPacker, options);
       setResult(res);
       setIsProcessing(false);
+      // On mobile devices, automatically switch to output tab if in single pane view
+      if (window.innerWidth < 1024 && mobileView === 'input') {
+        setMobileView('output');
+      }
     }, 10);
-  }, [inputCode, selectedPacker, options]);
+  }, [inputCode, selectedPacker, options, mobileView]);
 
   // Execute on initial mount with default sample
   useEffect(() => {
@@ -126,23 +133,73 @@ export const App: React.FC = () => {
         isProcessing={isProcessing}
       />
 
-      {/* Workbench Dual-Pane Layout */}
-      <main className="flex-1 p-3 sm:p-4 max-w-7xl w-full mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full min-h-[540px]">
+      {/* Main Workspace */}
+      <main className="flex-1 p-3 sm:p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6">
+        {/* Mobile View Mode Switcher (Visible on mobile & tablet < lg) */}
+        <div className="flex lg:hidden items-center justify-center">
+          <div className="inline-flex rounded-xl border border-[var(--brand-border)] bg-[var(--brand-surface)] p-1 shadow-xs">
+            <button
+              onClick={() => setMobileView('input')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                mobileView === 'input'
+                  ? 'bg-[var(--brand-accent)] text-[var(--brand-accent-fg)] shadow-xs'
+                  : 'text-[var(--brand-muted)] hover:text-[var(--brand-fg)]'
+              }`}
+            >
+              <FileCode className="h-3.5 w-3.5" />
+              <span>Input</span>
+            </button>
+
+            <button
+              onClick={() => setMobileView('output')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                mobileView === 'output'
+                  ? 'bg-[var(--brand-accent)] text-[var(--brand-accent-fg)] shadow-xs'
+                  : 'text-[var(--brand-muted)] hover:text-[var(--brand-fg)]'
+              }`}
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Clean Output</span>
+              {result?.output && <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />}
+            </button>
+
+            <button
+              onClick={() => setMobileView('split')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                mobileView === 'split'
+                  ? 'bg-[var(--brand-accent)] text-[var(--brand-accent-fg)] shadow-xs'
+                  : 'text-[var(--brand-muted)] hover:text-[var(--brand-fg)]'
+              }`}
+            >
+              <Columns2 className="h-3.5 w-3.5" />
+              <span>Split</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Workbench Dual-Pane Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full min-h-[500px]">
           {/* Left: Input Obfuscated Code */}
-          <EditorPane
-            value={inputCode}
-            onChange={setInputCode}
-            onClear={handleClear}
-          />
+          <div className={`${mobileView === 'output' ? 'hidden lg:block' : 'block'} h-full min-h-[420px]`}>
+            <EditorPane
+              value={inputCode}
+              onChange={setInputCode}
+              onClear={handleClear}
+            />
+          </div>
 
           {/* Right: Output Clean Deobfuscated Code */}
-          <OutputPane
-            result={result}
-            onBeautify={handleBeautifyOutput}
-            originalCode={inputCode}
-          />
+          <div className={`${mobileView === 'input' ? 'hidden lg:block' : 'block'} h-full min-h-[420px]`}>
+            <OutputPane
+              result={result}
+              onBeautify={handleBeautifyOutput}
+              originalCode={inputCode}
+            />
+          </div>
         </div>
+
+        {/* Practitioner Field Guide & Educational Manual */}
+        <GuideSection />
       </main>
 
       {/* Bottom Telemetry Status Bar */}

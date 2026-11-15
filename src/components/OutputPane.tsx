@@ -15,12 +15,11 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [wrapLines, setWrapLines] = useState(true);
-  const [viewTab, setViewTab] = useState<'code' | 'diff' | 'stats'>('code');
+  const [viewTab, setViewTab] = useState<'code' | 'diff'>('code');
 
   const outputText = result ? result.output : '';
   const lines = outputText ? outputText.split('\n').length : 1;
   const chars = outputText.length;
-  const sizeKb = (new Blob([outputText]).size / 1024).toFixed(1);
 
   const handleCopy = async () => {
     if (!outputText) return;
@@ -49,39 +48,39 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
   return (
     <div className="flex flex-col h-full border border-[var(--brand-border)] bg-[var(--brand-surface)] rounded-xl overflow-hidden shadow-xs">
       {/* Pane Header */}
-      <div className="flex items-center justify-between border-b border-[var(--brand-border)] bg-[var(--brand-bg)]/80 px-3 py-2">
-        <div className="flex items-center gap-1">
+      <div className="flex items-center justify-between border-b border-[var(--brand-border)] bg-[var(--brand-bg)]/80 px-2.5 sm:px-3 py-2 overflow-x-auto no-scrollbar gap-2">
+        <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={() => setViewTab('code')}
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
               viewTab === 'code'
                 ? 'bg-[var(--brand-surface)] text-[var(--brand-fg)] shadow-xs'
                 : 'text-[var(--brand-muted)] hover:text-[var(--brand-fg)]'
             }`}
           >
             <Sparkles className="h-3.5 w-3.5 text-[var(--brand-accent)]" />
-            <span>Clean JavaScript</span>
+            <span>Clean Code</span>
           </button>
 
           <button
             onClick={() => setViewTab('diff')}
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
               viewTab === 'diff'
                 ? 'bg-[var(--brand-surface)] text-[var(--brand-fg)] shadow-xs'
                 : 'text-[var(--brand-muted)] hover:text-[var(--brand-fg)]'
             }`}
           >
             <Eye className="h-3.5 w-3.5" />
-            <span>Side-by-Side Diff</span>
+            <span>Diff</span>
           </button>
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           <button
             onClick={() => setWrapLines(!wrapLines)}
             title={wrapLines ? 'Disable line wrap' : 'Enable line wrap'}
-            className={`p-1.5 rounded transition-all ${
+            className={`p-1.5 rounded transition-all cursor-pointer ${
               wrapLines
                 ? 'bg-[var(--brand-accent-soft)] text-[var(--brand-accent-ink)]'
                 : 'text-[var(--brand-muted)] hover:text-[var(--brand-fg)] hover:bg-[var(--brand-border-subtle)]'
@@ -94,7 +93,7 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
             onClick={onBeautify}
             title="Re-format & Beautify"
             disabled={!outputText}
-            className="flex items-center gap-1 px-2 py-1 rounded text-xs text-[var(--brand-muted)] hover:text-[var(--brand-fg)] hover:bg-[var(--brand-border-subtle)] transition-all disabled:opacity-40"
+            className="flex items-center gap-1 px-2 py-1 rounded text-xs text-[var(--brand-muted)] hover:text-[var(--brand-fg)] hover:bg-[var(--brand-border-subtle)] transition-all disabled:opacity-40 cursor-pointer"
           >
             <AlignLeft className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Format</span>
@@ -103,20 +102,20 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
           <button
             onClick={handleCopy}
             disabled={!outputText}
-            className={`flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition-all ${
+            className={`flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded text-xs font-medium transition-all cursor-pointer ${
               copied
                 ? 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/30'
                 : 'border border-[var(--brand-border-subtle)] bg-[var(--brand-surface)] text-[var(--brand-fg)] hover:border-[var(--brand-border)] hover:shadow-xs disabled:opacity-40'
             }`}
           >
             {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-            <span>{copied ? 'Copied!' : 'Copy'}</span>
+            <span>{copied ? 'Copied' : 'Copy'}</span>
           </button>
 
           <button
             onClick={handleDownload}
             disabled={!outputText}
-            className="flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-[var(--brand-accent)] text-[var(--brand-accent-fg)] hover:bg-[var(--brand-accent-hover)] transition-all shadow-xs disabled:opacity-40"
+            className="flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded text-xs font-semibold bg-[var(--brand-accent)] text-[var(--brand-accent-fg)] hover:bg-[var(--brand-accent-hover)] transition-all shadow-xs disabled:opacity-40 cursor-pointer"
           >
             <Download className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Export</span>
@@ -137,7 +136,7 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
         {viewTab === 'code' && (
           <div className="flex h-full w-full">
             {/* Line numbers column */}
-            <div className="select-none bg-[var(--brand-bg)]/40 border-r border-[var(--brand-border-subtle)] py-3 px-2 font-mono text-xs text-[var(--brand-muted)]/50 text-right min-w-[42px] overflow-hidden">
+            <div className="select-none bg-[var(--brand-bg)]/40 border-r border-[var(--brand-border-subtle)] py-3 px-2 font-mono text-xs text-[var(--brand-muted)]/50 text-right min-w-[36px] sm:min-w-[42px] overflow-hidden">
               {Array.from({ length: Math.min(lines, 1000) }).map((_, i) => (
                 <div key={i} className="leading-6">
                   {i + 1}
@@ -181,15 +180,15 @@ export const OutputPane: React.FC<OutputPaneProps> = ({
       </div>
 
       {/* Pane Footer Stats */}
-      <div className="flex items-center justify-between border-t border-[var(--brand-border-subtle)] bg-[var(--brand-bg)]/60 px-3 py-1.5 font-mono text-[11px] text-[var(--brand-muted)]">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between border-t border-[var(--brand-border-subtle)] bg-[var(--brand-bg)]/60 px-2.5 sm:px-3 py-1.5 font-mono text-[11px] text-[var(--brand-muted)]">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {result?.detectedType && (
             <span className="inline-flex items-center gap-1 rounded bg-[var(--brand-accent-soft)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--brand-accent-ink)] uppercase">
               <CheckCircle2 className="h-3 w-3" />
               {result.detectedType}
             </span>
           )}
-          <span>{lines.toLocaleString()} lines · {chars.toLocaleString()} chars</span>
+          <span>{lines.toLocaleString()}L · {chars.toLocaleString()}C</span>
         </div>
 
         <div>

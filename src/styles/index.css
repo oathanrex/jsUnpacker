@@ -37,3 +37,13 @@ pre, textarea, code {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--brand-muted);
 }
+
+/* Hide scrollbars for horizontal tab strips on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
