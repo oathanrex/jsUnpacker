@@ -125,6 +125,8 @@ export const ControlsBar: React.FC<ControlsBarProps> = ({
           {/* Unpacker Selector Dropdown */}
           <div className="relative flex-1 sm:flex-initial min-w-[150px] sm:min-w-[210px]">
             <select
+              id="unpacker-engine-select"
+              name="unpacker-engine-select"
               value={selectedPacker}
               onChange={(e) => onSelectPacker(e.target.value as PackerType)}
               aria-label="Deobfuscation engine selector"
@@ -231,6 +233,8 @@ export const ControlsBar: React.FC<ControlsBarProps> = ({
                           </span>
                         </div>
                         <input
+                          id={`unpacker-rule-${key}`}
+                          name={`unpacker-rule-${key}`}
                           type="checkbox"
                           checked={options[key]}
                           onChange={() => toggleOption(key)}

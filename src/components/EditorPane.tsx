@@ -170,6 +170,9 @@ export const EditorPane: React.FC<EditorPaneProps> = ({
 
             {/* Code Input Area */}
             <textarea
+              id="javascript-code-input"
+              name="javascript-code-input"
+              aria-label="JavaScript code input"
               value={value}
               onChange={(e) => onChange(e.target.value)}
               placeholder="// Paste obfuscated, packed, or encoded JavaScript here..."
@@ -207,6 +210,8 @@ export const EditorPane: React.FC<EditorPaneProps> = ({
               Supports .js, .mjs, .cjs, or raw text files. Max 10MB processed client-side.
             </p>
             <input
+              id="javascript-file-input"
+              name="javascript-file-input"
               type="file"
               ref={fileInputRef}
               accept=".js,.mjs,.cjs,.txt"
@@ -238,6 +243,9 @@ export const EditorPane: React.FC<EditorPaneProps> = ({
 
             <div className="w-full flex flex-col sm:flex-row gap-2">
               <input
+                id="remote-script-url-input"
+                name="remote-script-url-input"
+                aria-label="Remote JavaScript script URL"
                 type="url"
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
