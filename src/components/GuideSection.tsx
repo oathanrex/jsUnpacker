@@ -14,6 +14,7 @@ import {
   Sparkles,
   ArrowRight,
   ExternalLink,
+  HelpCircle,
 } from 'lucide-react';
 
 interface GuideSectionProps {
@@ -21,7 +22,7 @@ interface GuideSectionProps {
 }
 
 export const GuideSection: React.FC<GuideSectionProps> = ({ onLoadSample }) => {
-  const [activeTab, setActiveTab] = useState<'guide' | 'signatures' | 'walkthrough' | 'safety' | 'nested'>('guide');
+  const [activeTab, setActiveTab] = useState<'guide' | 'signatures' | 'walkthrough' | 'safety' | 'nested' | 'faq'>('guide');
 
   return (
     <section className="mt-8 rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-surface)] p-4 sm:p-6 lg:p-8 shadow-xs">
@@ -59,6 +60,7 @@ export const GuideSection: React.FC<GuideSectionProps> = ({ onLoadSample }) => {
           { id: 'walkthrough', label: '4-Step Walkthrough', icon: Zap },
           { id: 'safety', label: 'Security Checklist', icon: AlertTriangle },
           { id: 'nested', label: 'Nested Obfuscation', icon: Layers },
+          { id: 'faq', label: 'FAQ', icon: HelpCircle },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -377,6 +379,45 @@ export const GuideSection: React.FC<GuideSectionProps> = ({ onLoadSample }) => {
               ))}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Tab 6: Frequently Asked Questions (FAQ) */}
+      {activeTab === 'faq' && (
+        <div className="mt-6 space-y-3">
+          {[
+            {
+              q: 'How do I deobfuscate JavaScript online safely?',
+              a: 'Paste your scrambled code into the input editor or drop a .js file up to 10MB. Click Auto-Detect & Deobfuscate. JSUnpacker Studio analyzes the code structure and unpacks it client-side inside your browser memory without uploading your code to any remote server.',
+            },
+            {
+              q: 'Does JSUnpacker Studio upload my code to an external server?',
+              a: 'No. JSUnpacker runs 100% locally in your browser memory using an in-browser Abstract Syntax Tree (AST) engine. No code, API keys, or proprietary snippets are ever transmitted over the network.',
+            },
+            {
+              q: 'Which JavaScript obfuscator formats can JSUnpacker deobfuscate?',
+              a: 'JSUnpacker supports 14 obfuscator engines, including Dean Edwards P.A.C.K.E.R, Obfuscator.IO (_0x hex array rotation loops), JSFuck (6-character ASCII), AAencode (Japanese emoticons), JJencode, Array Index Decoders, Number Encoders, Eval Sandbox Wrappers, MyObfuscate, WiseLoop, and URL-encoded bookmarklets.',
+            },
+            {
+              q: 'How do I unpack double or nested obfuscated scripts?',
+              a: 'For scripts packed in multiple layers (e.g. Dean Edwards packed inside an Obfuscator.IO hex array), use the two-pass technique: unpack the script once, copy the resulting output back into the input editor, and click Auto-Detect a second time to peel away the inner layer.',
+            },
+            {
+              q: 'What dangerous functions should I check before executing unknown JavaScript?',
+              a: 'Before running unpacked code, inspect it for outbound network calls (fetch, XMLHttpRequest, sendBeacon), dynamic script tag creation (document.createElement("script")), and credential scraping (document.cookie, localStorage, or form input hooks).',
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-bg)]/40 p-4"
+            >
+              <h3 className="font-display text-xs sm:text-sm font-bold text-[var(--brand-fg)] mb-1.5 flex items-center gap-2">
+                <HelpCircle className="h-4 w-4 text-[var(--brand-accent)] shrink-0" />
+                <span>{item.q}</span>
+              </h3>
+              <p className="text-xs text-[var(--brand-muted)] leading-relaxed pl-6">{item.a}</p>
+            </div>
+          ))}
         </div>
       )}
     </section>

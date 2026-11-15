@@ -1,0 +1,5 @@
+# robots.txt for JSUnpacker Studio by Oathan Rex
+User-agent: *
+Allow: /
+
+Sitemap: https://oathanrex.github.io/jsUnpacker/sitemap.xml

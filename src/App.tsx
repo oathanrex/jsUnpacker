@@ -135,6 +135,24 @@ export const App: React.FC = () => {
 
       {/* Main Workspace */}
       <main className="flex-1 p-3 sm:p-4 md:p-6 max-w-7xl w-full mx-auto space-y-6">
+        {/* Authoritative Page Title (Semantic H1 for SEO & User Clarity) */}
+        <div className="border-b border-[var(--brand-border-subtle)] pb-3">
+          <div className="flex flex-wrap items-center gap-2 mb-1.5">
+            <span className="inline-flex items-center gap-1 rounded-full border border-[var(--brand-accent)]/30 bg-[var(--brand-accent-soft)] px-2.5 py-0.5 text-[10px] font-semibold text-[var(--brand-accent-ink)] uppercase tracking-wider">
+              100% In-Browser Privacy
+            </span>
+            <span className="font-mono text-xs text-[var(--brand-muted)]">
+              AST Engine v2.0 · Zero Server Telemetry
+            </span>
+          </div>
+          <h1 className="font-display text-lg sm:text-xl lg:text-2xl font-bold tracking-tight text-[var(--brand-fg)]">
+            Online JavaScript Deobfuscator &amp; Unpacker Studio
+          </h1>
+          <p className="text-xs sm:text-sm text-[var(--brand-muted)] max-w-3xl leading-relaxed mt-1">
+            Safely unpack, reverse engineer, and beautify Dean Edwards Packer, Obfuscator.IO (_0x), JSFuck, AAencode, JJencode, and array rotators client-side without uploading your code to any external server.
+          </p>
+        </div>
+
         {/* Mobile View Mode Switcher (Visible on mobile & tablet < lg) */}
         <div className="flex lg:hidden items-center justify-center">
           <div className="inline-flex rounded-xl border border-[var(--brand-border)] bg-[var(--brand-surface)] p-1 shadow-xs">

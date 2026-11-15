@@ -3,16 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JSUnpacker Studio — Production JavaScript Deobfuscator & Unpacker</title>
+    <title>Online JavaScript Deobfuscator &amp; Unpacker | JSUnpacker Studio by Oathan Rex</title>
+    
+    <!-- Primary SEO Meta Tags -->
     <meta
       name="description"
-      content="High-performance client-side JavaScript deobfuscator and unpacker by Oathan Rex. Unpack Dean Edwards Packer, Obfuscator.IO, JSFuck, AAencode, JJencode, and array encoders with 100% privacy."
+      content="Free online JavaScript deobfuscator and unpacker. Reverse engineer Dean Edwards Packer, Obfuscator.IO (_0x arrays), JSFuck, AAencode, JJencode, and array encoders client-side with 100% in-browser memory privacy."
+    />
+    <meta
+      name="keywords"
+      content="javascript deobfuscator, js unpacker, online javascript unpacker, deobfuscate javascript online, dean edwards packer unpacker, obfuscator.io deobfuscator, jsfuck decoder, aaencode decoder, jjencode decoder, client-side deobfuscator, reverse engineering javascript, unminify javascript"
     />
     <meta name="author" content="Oathan Rex" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://oathanrex.github.io/jsUnpacker/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://oathanrex.github.io/jsUnpacker/" />
+    <meta property="og:title" content="Online JavaScript Deobfuscator &amp; Unpacker | JSUnpacker Studio" />
+    <meta
+      property="og:description"
+      content="Free online client-side JavaScript deobfuscator. Reverse engineer Dean Edwards Packer, Obfuscator.IO, JSFuck, and 14+ obfuscators with 100% in-browser privacy."
+    />
+    <meta property="og:image" content="https://oathanrex.github.io/jsUnpacker/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="JSUnpacker Studio — JavaScript Deobfuscator &amp; Unpacker" />
+    <meta property="og:site_name" content="JSUnpacker Studio" />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@oathanrex" />
+    <meta name="twitter:creator" content="@oathanrex" />
+    <meta name="twitter:title" content="Online JavaScript Deobfuscator &amp; Unpacker | JSUnpacker Studio" />
+    <meta
+      name="twitter:description"
+      content="Free online client-side JavaScript deobfuscator. Reverse engineer Dean Edwards, Obfuscator.IO, JSFuck, and 14+ formats with 100% browser memory privacy."
+    />
+    <meta name="twitter:image" content="https://oathanrex.github.io/jsUnpacker/og-image.png" />
+
+    <!-- Favicons & Mobile Web App -->
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="icon" type="image/png" sizes="192x192" href="favicon.png" />
     <link rel="apple-touch-icon" href="favicon.png" />
-    
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="JSUnpacker" />
+
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,8 +60,141 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Schema.org JSON-LD Structured Data: WebApplication, FAQPage, HowTo -->
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "JSUnpacker Studio",
+          "alternateName": "Online JavaScript Deobfuscator & Unpacker",
+          "url": "https://oathanrex.github.io/jsUnpacker/",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "All modern web browsers",
+          "description": "High-performance client-side JavaScript deobfuscator and unpacker. Reverse engineer Dean Edwards Packer, Obfuscator.IO, JSFuck, AAencode, JJencode, and array encoders client-side with 100% in-browser privacy.",
+          "author": {
+            "@type": "Person",
+            "name": "Oathan Rex",
+            "url": "https://oathanrex.github.io"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "100% Client-Side Privacy (Zero Server Uploads)",
+            "Heuristic AST Auto-Detection",
+            "14 Unpacker Engines (Dean Edwards, Obfuscator.IO, JSFuck, AAencode, JJencode)",
+            "Side-by-Side Diff Comparison",
+            "Safe Constant Math Evaluation",
+            "Hex and Unicode String Unescaping",
+            "Object Property Chain Recovery",
+            "One-Click Clean Script Export"
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I deobfuscate JavaScript online safely?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Paste your scrambled code into the input editor or drop a .js file up to 10MB. Click Auto-Detect & Deobfuscate. JSUnpacker Studio analyzes the code structure and unpacks it client-side inside your browser memory without uploading your code to any remote server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does JSUnpacker Studio upload my code to an external server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. JSUnpacker runs 100% locally in your browser memory using an in-browser Abstract Syntax Tree (AST) engine. No code, API keys, or proprietary snippets are ever transmitted over the network."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which JavaScript obfuscator formats can JSUnpacker deobfuscate?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "JSUnpacker supports 14 obfuscator engines, including Dean Edwards P.A.C.K.E.R, Obfuscator.IO (_0x hex array rotation loops), JSFuck (6-character ASCII), AAencode (Japanese emoticons), JJencode, Array Index Decoders, Number Encoders, Eval Sandbox Wrappers, MyObfuscate, WiseLoop, and URL-encoded bookmarklets."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I unpack double or nested obfuscated scripts?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "For scripts packed in multiple layers (e.g. Dean Edwards packed inside an Obfuscator.IO hex array), use the two-pass technique: unpack the script once, copy the resulting output back into the input editor, and click Auto-Detect a second time to peel away the inner layer."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What dangerous functions should I check before executing unknown JavaScript?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Before running unpacked code, inspect it for outbound network calls (fetch, XMLHttpRequest, sendBeacon), dynamic script tag creation (document.createElement('script')), and credential scraping (document.cookie, localStorage, or form input hooks)."
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          "name": "How to Deobfuscate and Unpack Obfuscated JavaScript",
+          "description": "Step-by-step instructions for reversing scrambled JavaScript code into clean readable source code.",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "name": "Paste or Upload JavaScript",
+              "text": "Paste your obfuscated snippet into the left editor pane or drag-and-drop a .js file up to 10MB."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Run Heuristic Auto-Detection",
+              "text": "Press Ctrl+Enter or click Auto-Detect & Deobfuscate. The engine scans the AST tokens and selects the matching deobfuscator."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Inspect Diff and Clean Strings",
+              "text": "Review the clean code in the right pane or toggle Side-by-Side Diff. Enable unescaping in Options to convert hex codes into readable text."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Export Clean Script",
+              "text": "Copy the clean code or click Export to download an unminified, readable .js file for auditing."
+            }
+          ]
+        }
+      ]
+    </script>
   </head>
   <body>
+    <!-- Fallback for search bots and users without JavaScript -->
+    <noscript>
+      <div style="max-width: 900px; margin: 40px auto; padding: 24px; font-family: sans-serif; color: #e6edf3; background: #0d1117; border-radius: 12px;">
+        <h1>Online JavaScript Deobfuscator &amp; Unpacker Studio</h1>
+        <p>
+          JSUnpacker Studio is a production client-side reverse engineering tool to unpack, deobfuscate, and beautify scrambled JavaScript code with 100% browser memory privacy.
+        </p>
+        <h2>Supported Obfuscation Formats (14 Engines)</h2>
+        <ul>
+          <li>Dean Edwards P.A.C.K.E.R (radix base-62 dictionary unwrap)</li>
+          <li>Obfuscator.IO (hex string array rotation and variable renaming)</li>
+          <li>JSFuck (6-character []()!+ ASCII logic decoding)</li>
+          <li>AAencode &amp; JJencode (Japanese emoticon and symbol deobfuscation)</li>
+          <li>Array Index Decoder and _Number Encoders</li>
+          <li>Eval Unwrap Sandbox &amp; Bookmarklet URL Decoders</li>
+        </ul>
+        <h2>How to Use</h2>
+        <p>
+          Please enable JavaScript in your browser to run the in-browser AST engine, interactive dual-pane editor, side-by-side diff comparison, and clean script export.
+        </p>
+      </div>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
