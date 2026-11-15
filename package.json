@@ -10,7 +10,7 @@
     "preview": "vite preview --port=4174 --host=0.0.0.0",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "test": "node --test src/engine/unpackers.test.js"
+    "test": "tsx --test src/engine/unpackers.test.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
