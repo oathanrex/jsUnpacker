@@ -1,135 +1,73 @@
-# de4js
+# JSUnpacker Studio — Production JavaScript Deobfuscator & Unpacker
 
-![Logo](assets/images/icons/icon-128x128.png)
+[![Status: Production](https://img.shields.io/badge/Status-Production-success?style=flat-square)](https://oathanrex.github.io/jsUnpacker/)
+[![Live App](https://img.shields.io/badge/Live-oathanrex.github.io%2FjsUnpacker-blue?style=flat-square)](https://oathanrex.github.io/jsUnpacker/)
+[![Privacy: 100% Client-Side](https://img.shields.io/badge/Privacy-100%25_Client--Side-emerald?style=flat-square)](https://oathanrex.github.io/jsUnpacker/)
+[![React 19](https://img.shields.io/badge/React-19.0-61dafb?style=flat-square&logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
+[![Tailwind v4](https://img.shields.io/badge/Tailwind-v4_OKLCH-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
-JavaScript Deobfuscator and Unpacker
+**JSUnpacker Studio** is an open-source, high-performance client-side JavaScript deobfuscator and unpacker application engineered by **Oathan Rex** ([@oathanrex](https://github.com/oathanrex)), accessible live at **[oathanrex.github.io/jsUnpacker](https://oathanrex.github.io/jsUnpacker/)**.
 
-## Helper
+Designed with the aesthetic precision and ergonomics of modern developer workstations (Chrome DevTools & Project IDX), JSUnpacker Studio decodes obfuscated, packed, and minified scripts directly inside your browser runtime with **zero external telemetry and zero server uploads**.
 
-The **Unreadable** option is disabled by default, because it uses data from [JS Nice](http://www.jsnice.org/). This cannot be done with JavaScript. You need to install UserScript [de4js_helper.user.js](https://github.com/jitvin/de4js/blob/master/userscript/de4js_helper.user.js) to enable it.
+---
 
-Install one of the following links:
+## ⚡ Supported Unpackers & Deobfuscation Engines
 
-- [Open User JS](https://openuserjs.org/scripts/baivong/de4js_helper)
-- [Greasy Fork](https://greasyfork.org/vi/scripts/33479-de4js-helper)
-- [Github](https://jitvin.github.io/de4js/userscript/de4js_helper.user.js)
+| Unpacker Engine | Detection Pattern | Target Obfuscation Family |
+| :--- | :--- | :--- |
+| **Dean Edwards P.A.C.K.E.R** | `eval(function(p,a,c,k,e,r)...)` | High-compression radix dictionary substitution used across web archives and scripts. |
+| **Obfuscator.IO** | Hex offset calls & IIFE array rotation | Obfuscator.io hex string lookups, self-defending functions, and array shifts. |
+| **JavaScript Obfuscator** | `var _0x... = [...]` | Standard array extraction, hex-encoded string decryption, and index normalization. |
+| **Array Decoder** | Generic `var arr = [...]` | Inlines referenced array keys directly into call sites and simplifies method chains. |
+| **_Number Obfuscator** | `var _0123; ...` | Numerical sequence variable encryption and scoped evaluation. |
+| **JSFuck** | `[][(![]+[])[+[]]...]` | 6-character esoteric ASCII JavaScript deobfuscation into readable strings. |
+| **AAencode** | `(ﾟДﾟ) ['_']` | Japanese anime smileys & emoticon Japanese character-table decoding. |
+| **JJencode** | `$=~[];$={...}` | Variable emoticon and palindrome character substitution decoding. |
+| **URLencode / Bookmarklet** | `%20%28function%29...` | Percent-encoded bookmarklets, escaped payload scripts, and URL parameters. |
+| **MyObfuscate** | `var _escape = '%...'` | MyObfuscate packer unwrap and analytics callback neutralization. |
+| **Eval Sandbox** | `eval(...)` | Safe client-side sandbox execution trapping without global window pollution. |
+| **WiseLoop** | `//Protected by WiseLoop` | WiseLoop PHP-JavaScript evaluation wrapper unpacking. |
+| **Clean Source AST** | Hex/Unicode literals | Unescapes `\x68\x65\x6c\x6c\x6f`, merges string concatenations, and recovers object paths. |
 
-`*` _**de4js helper** doesn't work offline._
+---
 
-## Features
+## 💎 Key Features
 
-- Works offline.
-- Source code beautifier / syntax highlighter.
-- Makes obfuscated code [readable](#helper).
-- Performance unpackers:
-  - **Eval**, e.g. Packer, WiseLoop
-  - **Array**, e.g. Javascript Obfuscator, Free JS Obfuscator
-  - [_Number](https://jsfiddle.net/ps5anL99/embedded/result,js,html,css/) _(not correct name)_
-  - [Packer](http://dean.edwards.name/packer/)
-  - [Javascript Obfuscator](https://javascriptobfuscator.com/Javascript-Obfuscator.aspx)
-  - [Free JS Obfuscator](http://www.freejsobfuscator.com/)
-  - [Obfuscator.IO](https://obfuscator.io/) _(but not all cases)_
-  - [My Obfuscate](http://myobfuscate.com/)
-  - **URL encode**, e.g. bookmarklet
-  - [JSFuck](https://github.com/aemkei/jsfuck)
-  - [JJencode](http://utf-8.jp/public/jjencode.html)
-  - [AAencode](http://utf-8.jp/public/aaencode.html)
-  - [WiseLoop](http://wiseloop.com/demo/php-javascript-obfuscator)
+- **100% Client-Side Privacy**: All deobfuscation runs on device via browser Web Workers and native JavaScript execution. Your code is never transmitted over the network.
+- **Realtime Heuristic Auto-Detection**: Instant regex and AST analysis to detect packer formats automatically with a single click (`Ctrl+Enter`).
+- **Interactive Dual-Pane Workbench**: Monospace code editor with line numbers, side-by-side diff comparison, and byte-reduction telemetry.
+- **Perceptually Uniform OKLCH Palette**: Shared design system with OLED true-dark (`#000000`) and paper-light themes matching the Oathan Rex developer ecosystem.
+- **Preset Test Suite**: Instant 1-click samples for Dean Edwards Packer, Obfuscator.IO, JSFuck, AAencode, JJencode, and Array Obfuscation.
+- **Flexible Ingestion**: Supports direct pasting, `.js` drag-and-drop file upload, and CORS-enabled remote script fetching.
 
-## Running with Docker
+---
 
-    docker-compose up
+## 🛠️ Architecture & Core Stack
 
-Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
+```
+Core Framework   : React 19 + TypeScript
+Styling Engine   : Tailwind CSS v4 + Hardware-Accelerated OKLCH Design Tokens
+Formatting       : JS-Beautify (Client-Side AST Normalization)
+Icons            : Lucide React
+Build Engine     : Vite 8 + Rollup Module Bundler
+Deployment       : GitHub Actions CI/CD to GitHub Pages
+```
 
-### Attach Shell
+---
 
-    docker exec -it de4js_app bash
-    bundle exec jekyll build
+## 👤 Author & Contact
 
-## Local Development
+**Oathan Rex**
+- Portfolio: [https://oathanrex.github.io](https://oathanrex.github.io)
+- GitHub: [@oathanrex](https://github.com/oathanrex)
+- Project Inquiry: [oathanrex@gmail.com](mailto:oathanrex@gmail.com)
+- Support: [buymeacoffee.com/oathanrex](https://buymeacoffee.com/oathanrex)
 
-### Install
+---
 
-    git clone https://github.com/jitvin/de4js.git
-    cd de4js
+## 📄 License
 
-If you don't have Ruby installed, install [Ruby 2.1.0 or higher](https://www.ruby-lang.org/en/downloads/).
-
-Fix missing libraries on **Ubuntu**:
-
-    sudo apt install ruby-dev zlib1g-dev
-
-Install **Bundler**:
-
-    gem install bundler
-
-Install **Jekyll** and other [dependencies](https://pages.github.com/versions/) from the GitHub Pages gem:
-
-    bundle install
-
-Fix EventMachine C extension not loading on **Windows 10**:
-
-    gem uninstall eventmachine
-    gem install eventmachine --platform ruby
-
-Install Workbox CLI:
-
-    npm install workbox-cli --global
-
-### Start serve
-
-    npm start
-
-Or, with livereload:
-
-    npm run watch
-
-Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
-
-### Build
-
-    npm run build
-
-## License
-
-[MIT License](https://baivong.mit-license.org/) © [jitvin](https://github.com/jitvin)
-
-## Credits
-
-### Active Contributors
-
-- [jitvin](https://github.com/jitvin)
-- [Himura2la](https://github.com/Himura2la)
-- [Flleeppyy](https://github.com/flleeppyy)
-
-### Open Source Contributors
-
-- [mathjs](https://github.com/josdejong/mathjs)
-- [js-beautify](https://github.com/beautify-web/js-beautify)
-- [highlight.js](https://github.com/isagalaev/highlight.js)
-- [clipboard.js](https://github.com/zenorocha/clipboard.js)
-- [magic-check](https://github.com/forsigner/magic-check)
-- [cat-in-136](https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html)
-- [Decoder-JJEncode](https://github.com/jacobsoo/Decoder-JJEncode)
-- [NotSoWise](https://github.com/FAKE1007/NotSoWise)
-
-### Resources
-
-- Icons made by [Eucalyp](https://www.flaticon.com/free-icon/artificial-intelligence_653469) from [Flaticon](https://www.flaticon.com/).
-
-## Related projects
-
-- [IlluminateJS](https://github.com/geeksonsecurity/illuminatejs): A static JavaScript deobfuscator.
-- [JStillery](https://github.com/mindedsecurity/JStillery): Advanced JavaScript Deobfuscation via Partial Evaluation.
-- [Akamai Deobfuscator](https://github.com/char/akamai-deobfuscator): A tool to help you deobfuscate Akamai scripts.
-- [Nice2Predict](https://github.com/eth-sri/Nice2Predict): Learning framework for program property prediction.
-- [Javascript deobfuscation AMA](https://github.com/jsoverson/javascript-deobfuscation-AMA): General questions about deobfuscating JavaScript.
-- [Deobfuscator IO](https://github.com/sd-soleaio/deobfuscator-io): A (incomplete) deobfuscator for scripts obfuscated with obfuscator.io (Archived).
-- [JavaScript Deobfuscator](https://github.com/LostMyCode/javascript-deobfuscator): Deobfuscation tool for obfuscated JavaScript using obfuscator.io.
-- [Prepack](https://github.com/facebook/prepack): A JavaScript bundle optimizer.
-- [JS Deobfuscate](https://github.com/RuochenLyu/js-deobfuscate): JavaScript deobfuscate for JSjiami, Sojson, ...
-- [JSDec](https://github.com/liulihaocai/JSDec): Online JavaScript decoder. Supported sojson v4/Premium/v5 and more (No longer update).
-- [Synchrony](https://github.com/uwu/synchrony): Kavascript-obfuscator cleaner & deobfuscator.
-
-`*` _[**Obfuscator.IO**](https://obfuscator.io/) is always up to date. The automatic deobfuscation tools (including this project) will usually not match its latest version. But that doesn't mean it's a safe tool to secure your source code._
+This project is open-source and licensed under the [MIT License](LICENSE).

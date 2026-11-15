@@ -1,0 +1,374 @@
+@layer base {
+  :root {
+    --font-display: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+    /* Layout & Spacing Tokens */
+    --container-max: 72rem;
+    --container-gutter: 1.5rem;
+    --nav-height: 4rem;
+    --space-section-y: 3.5rem;
+    --space-section-y-lg: 4.5rem;
+    --radius-card: 1rem;
+    --radius-surface: 0.75rem;
+    --radius-control: 0.5rem;
+    --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* Oathan Rex Signature Brand Tokens: Mineral Slate & Drafting Emerald (OKLCH, WCAG AA+) */
+    --brand-bg: oklch(97.8% 0.005 170);
+    --brand-surface: oklch(99.6% 0.002 170);
+    --brand-well: oklch(94.4% 0.009 172);
+    --brand-fg: oklch(19.5% 0.025 198);
+    --brand-muted: oklch(44.5% 0.022 195);
+    --brand-border: oklch(86.8% 0.012 182);
+    --brand-border-subtle: oklch(91.5% 0.008 176);
+
+    /* Primary Drafting Emerald (5.4:1 contrast with white button text) */
+    --brand-accent: oklch(45.5% 0.145 162);
+    --brand-accent-hover: oklch(39.5% 0.145 162);
+    --brand-accent-fg: #ffffff;
+    --brand-accent-ink: oklch(40.5% 0.138 162);
+    --brand-accent-soft: oklch(93.8% 0.042 162);
+    --brand-accent-ring: oklch(45.5% 0.145 162);
+
+    /* Secondary Starlight Amber (4.7:1+ on white) */
+    --brand-amber: oklch(50% 0.15 70);
+    --brand-amber-soft: oklch(95.5% 0.04 80);
+
+    /* Brand Emblem Gradient Tokens */
+    --logo-bg-grad: linear-gradient(145deg, #0b1f22 0%, #113338 58%, #09191c 100%);
+    --logo-glow-grad: radial-gradient(circle at 28% 30%, rgba(52, 211, 153, 0.24), transparent 64%);
+    --logo-ring-color: #34d399;
+    --logo-ink-color: #f8fafc;
+  }
+
+  html.dark {
+    color-scheme: dark;
+
+    --brand-bg: oklch(14.5% 0.015 204);
+    --brand-surface: oklch(19.5% 0.018 204);
+    --brand-well: oklch(17.0% 0.016 204);
+    --brand-fg: oklch(95.5% 0.006 180);
+    --brand-muted: oklch(73.5% 0.014 190);
+    --brand-border: oklch(30.5% 0.018 200);
+    --brand-border-subtle: oklch(25.0% 0.016 202);
+
+    /* Luminous Drafting Emerald (>9.5:1 contrast with deep ink button text) */
+    --brand-accent: oklch(69.5% 0.155 160);
+    --brand-accent-hover: oklch(75.5% 0.155 160);
+    --brand-accent-fg: oklch(14.5% 0.028 188);
+    --brand-accent-ink: oklch(75.5% 0.145 160);
+    --brand-accent-soft: oklch(26.0% 0.052 165);
+    --brand-accent-ring: oklch(75.5% 0.145 160);
+
+    --brand-amber: oklch(80% 0.145 82);
+    --brand-amber-soft: oklch(26% 0.045 78);
+  }
+
+  html {
+    color-scheme: light;
+    font-family: var(--font-sans);
+    background-color: var(--brand-bg);
+    color: var(--brand-fg);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  code, pre, kbd, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* Consolidated Layout & Section Shells */
+  .layout-container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-gutter);
+  }
+
+  .section-shell {
+    scroll-margin-top: var(--nav-height);
+    border-bottom: 1px solid var(--brand-border);
+    background-color: var(--brand-bg);
+    padding-block: var(--space-section-y);
+  }
+
+  .section-shell--well {
+    scroll-margin-top: var(--nav-height);
+    border-bottom: 1px solid var(--brand-border);
+    background-color: color-mix(in oklab, var(--brand-well) 50%, transparent);
+    padding-block: var(--space-section-y);
+  }
+
+  .section-shell--end {
+    scroll-margin-top: var(--nav-height);
+    background-color: var(--brand-bg);
+    padding-block: var(--space-section-y);
+  }
+
+  .section-shell--hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--brand-border);
+    background-color: var(--brand-bg);
+  }
+
+  .footer-shell {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--brand-border);
+    background-color: color-mix(in oklab, var(--brand-well) 65%, transparent);
+  }
+
+  @media (min-width: 1024px) {
+    .section-shell,
+    .section-shell--well,
+    .section-shell--end {
+      padding-block: var(--space-section-y-lg);
+    }
+  }
+
+  /* Consolidated Typography & Card Surfaces */
+  .eyebrow-label {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    color: var(--brand-accent-ink);
+  }
+
+  .section-heading {
+    margin-top: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--brand-fg);
+  }
+
+  @media (min-width: 640px) {
+    .section-heading {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  .surface-card {
+    border-radius: var(--radius-surface);
+    border: 1px solid var(--brand-border);
+    background-color: var(--brand-surface);
+  }
+
+  .surface-panel {
+    border-radius: var(--radius-card);
+    border: 1px solid var(--brand-border);
+    background-color: var(--brand-surface);
+  }
+
+  /* Focus, Button & Form Primitives */
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--brand-accent-ring);
+    outline-offset: 2px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-control);
+    background-color: var(--brand-accent);
+    color: var(--brand-accent-fg);
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 150ms var(--ease-brand), transform 150ms var(--ease-brand);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--brand-accent-hover);
+  }
+
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--brand-accent-ring);
+    outline-offset: 2px;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--brand-border);
+    background-color: var(--brand-surface);
+    color: var(--brand-fg);
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 150ms var(--ease-brand), transform 150ms var(--ease-brand);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--brand-well);
+  }
+
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--brand-accent-ring);
+    outline-offset: 2px;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-control);
+    color: var(--brand-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 150ms var(--ease-brand), color 150ms var(--ease-brand);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--brand-well);
+    color: var(--brand-fg);
+  }
+
+  .btn-ghost:focus-visible {
+    outline: 2px solid var(--brand-accent-ring);
+    outline-offset: 2px;
+  }
+
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--brand-border);
+    background-color: var(--brand-surface);
+    color: var(--brand-fg);
+    flex-shrink: 0;
+    transition: background-color 150ms var(--ease-brand), color 150ms var(--ease-brand);
+  }
+
+  .btn-icon:hover {
+    background-color: var(--brand-well);
+  }
+
+  .btn-icon:focus-visible {
+    outline: 2px solid var(--brand-accent-ring);
+    outline-offset: 2px;
+  }
+
+  .form-field {
+    width: 100%;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--brand-border);
+    background-color: var(--brand-surface);
+    color: var(--brand-fg);
+    transition: border-color 150ms ease;
+  }
+
+  .form-field::placeholder {
+    color: var(--brand-muted);
+  }
+
+  .form-field:focus {
+    border-color: var(--brand-accent);
+    outline: none;
+  }
+
+  /* Consolidated Modal Primitives */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+  }
+
+  .modal-panel {
+    width: 100%;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--brand-border);
+    background-color: var(--brand-surface);
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Unified Official OathanRex Brand Emblem */
+  .logo-icon,
+  .brand-logo {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: var(--brand-card-bg);
+    border: 1px solid var(--brand-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .logo-icon:hover,
+  .brand-logo:hover {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.35);
+  }
+
+  .logo-icon img,
+  .brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .drafting-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--brand-border) 55%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--brand-border) 55%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

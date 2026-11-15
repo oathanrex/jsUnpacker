@@ -1,41 +1,33 @@
 {
-  "name": "jsUnpacker",
-  "version": "1.12.0",
-  "description": "JavaScript Deobfuscator and Unpacker",
-  "main": "main.js",
+  "name": "jsunpacker-studio",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Production JavaScript Deobfuscator & Unpacker Studio by Oathan Rex. 100% Client-Side Privacy.",
   "scripts": {
-    "build": "bundle exec jekyll build && workbox generateSW workbox-config.js",
-    "d-build": "docker exec -it de4js_app bundle exec jekyll build && workbox generateSW workbox-config.js",
-    "start": "bundle exec jekyll serve --watch --config _config.yml",
-    "watch": "bundle exec jekyll serve --watch --config _config.yml,_config_development.yml --livereload",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite --port=3001 --host=0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --port=4174 --host=0.0.0.0",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit",
+    "test": "node --test src/engine/unpackers.test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oathanrex/jsUnpacker.git"
-  },
-  "keywords": [
-    "deobfuscator",
-    "deobfuscate",
-    "deobfuscation",
-    "unpacker",
-    "decode",
-    "decrypt",
-    "javascript",
-    "online-tools"
-  ],
-  "author": "Oathan Rex",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/oathanrex/jsUnpacker/issues"
-  },
-  "homepage": "https://oathanrex.github.io/jsUnpacker/",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/jsUnpacker"
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "js-beautify": "^1.15.1",
+    "lucide-react": "^0.546.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.0"
   },
   "devDependencies": {
-    "eslint-plugin-frontmatter": "0.0.8",
-    "workbox-cli": "^6.0.2"
+    "@types/js-beautify": "^1.14.3",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }
