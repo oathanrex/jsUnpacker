@@ -59,7 +59,7 @@ export const ControlsBar: React.FC<ControlsBarProps> = ({
               className="appearance-none rounded-lg border border-[var(--brand-border)] bg-[var(--brand-bg)] py-2 pr-8 pl-3 font-mono text-xs font-medium text-[var(--brand-fg)] transition-all hover:border-[var(--brand-accent)] focus:border-[var(--brand-accent)] focus:outline-none"
             >
               <optgroup label="Auto Detection">
-                <option value="auto">⚡ Auto-Detect (Heuristic AST)</option>
+                <option value="auto">Auto-Detect (Heuristic AST)</option>
               </optgroup>
               <optgroup label="Popular & Modern">
                 <option value="p_a_c_k_e_r">Dean Edwards P.A.C.K.E.R</option>
